@@ -21,7 +21,7 @@ def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_c
     if only_clean:
         cmd = "./run.sh -r " + str(out_dir)  
         os.system(cmd)
-        console.log("[magenta]All files cleaned and script terminated![/magenta]")
+        console.log("[magenta]All files have been cleaned and the script has been terminated![/magenta]")
         exit(1)
 
     if clean:

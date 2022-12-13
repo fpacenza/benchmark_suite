@@ -2,3 +2,4 @@ bin/*
 problems/*
 out_dir/.*
 *.csv
+*.out

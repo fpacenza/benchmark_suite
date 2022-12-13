@@ -13,6 +13,9 @@ if [[ $@ == *"-s"* ]]; then
   else
     echo "PROBLEM,INSTANCE,EXECUTABLE,STATUS,TIME,MEMORY,EXIT_CODE" > results_$today.csv
     cat $out_dir/*.csv | grep -v $head_string >> results_$today.csv
+    
+    echo "NUMA04 ASP Benchmarks Complete" | mutt -s "NUMA04 ASP Benchmarks Complete" pacenza@mat.unical.it -a results_$today.csv
+    
     echo "All files sent"
   fi
   exit 1
@@ -27,7 +30,7 @@ if [[ $@ == *"-c"* ]]; then
     shift
   fi
   rm -rf *.out *.csv $out_dir 1> /dev/null 2>/dev/null
-  echo "Rimozione dei file temporanei e dei vecchi esperimenti avvenuta con successo!"
+  echo "Temp files removed correctly!"
 fi
 
 if [[ $@ == *"-r"* ]]; then
@@ -38,8 +41,8 @@ if [[ $@ == *"-r"* ]]; then
     out_dir=$1
   fi
   rm -rf *.out *.csv $out_dir 1> /dev/null 2>/dev/null
-  echo "Rimozione dei file temporanei e dei vecchi esperimenti avvenuta con successo!"
-  echo "USCITA!"
+  echo "Temp files removed correctly!"
+#  echo "USCITA!"
   exit 1
 fi
 
@@ -63,6 +66,12 @@ if [[ $@ == *"--taskset"* ]]; then
   shift
   taskset="taskset -c $1"
   shift
+fi
+
+output_redirect=""
+if [[ $@ == *"--no-output"* ]]; then
+  shift
+  output_redirect="/dev/null"
 fi
 
 
@@ -96,8 +105,13 @@ while read -r instance; do
   filled_counter=$(seq -f "%05g" $counter $counter)
   # Run di executable
   now=$(date "+%Y-%M-%d_%H-%M-%S") 
-  out_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance"_OUT_"$exe_name
+  if [ -z "$output_redirect" ]; then
+    out_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance"_OUT_"$exe_name
+  else
+    out_instance_path="$output_redirect"
+  fi
   err_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance"_ERR_"$exe_name
+
   # echo $exe $folder/$encoding $folder/$instance
   time_output=$(/usr/bin/time -v bash -c "$timeout $taskset perf stat -o perf.out $exe $folder/$encoding $folder/$instance 1> $out_instance_path 2> $err_instance_path" 2>&1)
 

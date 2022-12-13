@@ -3,3 +3,5 @@ problems/*
 out_dir/.*
 *.csv
 *.out
+bin/idlv_wasp.sh
+bin/idlv_clasp.sh

@@ -1,15 +1,43 @@
 #!/bin/bash
 
-# Verifichiamo se l'opzione -c (clean) è stata passata come argomento
+today=$(date "+%Y-%M-%d_%H.%M.%S")
+out_dir="out_dir"
+head_string="PROBLEM,INSTANCE,EXECUTABLE,STATUS,TIME,MEMORY,EXIT_CODE"
+
+# Check if the options are in the argv array
+if [[ $@ == *"-s"* ]]; then
+  shift
+  out_dir=$1
+  if [ ! -d "./$out_dir" ]; then
+    echo "Directory $out_dir does not exists!"
+  else
+    echo "PROBLEM,INSTANCE,EXECUTABLE,STATUS,TIME,MEMORY,EXIT_CODE" > results_$today.csv
+    cat $out_dir/*.csv | grep -v $head_string >> results_$today.csv
+    echo "All files sent"
+  fi
+  exit 1
+fi
+
 if [[ $@ == *"-c"* ]]; then
   shift
-  rm -rf *.out *.csv out_dir/.* 1> /dev/null 2>/dev/null
+  if [ -z "$1" ]; then
+    echo "Using default \"out_dir\""
+  else
+    out_dir=$1
+    shift
+  fi
+  rm -rf *.out *.csv $out_dir 1> /dev/null 2>/dev/null
   echo "Rimozione dei file temporanei e dei vecchi esperimenti avvenuta con successo!"
 fi
 
 if [[ $@ == *"-r"* ]]; then
   shift
-  rm -rf *.out *.csv out_dir/.* 1> /dev/null 2>/dev/null
+  if [ -z "$1" ]; then
+    echo "Using default \"out_dir\""
+  else
+    out_dir=$1
+  fi
+  rm -rf *.out *.csv $out_dir 1> /dev/null 2>/dev/null
   echo "Rimozione dei file temporanei e dei vecchi esperimenti avvenuta con successo!"
   echo "USCITA!"
   exit 1
@@ -30,9 +58,16 @@ if [[ $@ == *"--memory-limit"* ]]; then
   shift
 fi
 
+taskset=""
+if [[ $@ == *"--taskset"* ]]; then
+  shift
+  taskset="taskset -c $1"
+  shift
+fi
+
 
 # Controlla se sono stati specificati tutti gli argomenti
-if [ $# -ne 5 ]; then
+if [ $# -ne 6 ]; then
   echo "Errore: specificare l'eseguibile, la cartella e il file con le istanze del problema"
   exit 1
 fi
@@ -41,16 +76,18 @@ fi
 exe=$1
 folder=$2
 instances_file=$3
-problem_name=$4
-exe_name=$5
+out_dir=$4
+problem_name=$5
+exe_name=$6
 encoding="encoding.asp"
-today=$(date "+%Y-%M-%d_%H.%M.%S")
 
-# Crea il file CSV per salvare i risultati
-echo "PROBLEM,INSTANCE,EXECUTABLE,STATUS,TIME,MEMORY,EXIT_CODE" > results_$today.csv
 
 # Crea la cartella per salvare l'output
-mkdir -p out_dir
+mkdir -p $out_dir
+
+# Crea il file CSV per salvare i risultati
+echo $head_string > $out_dir/results_$today.csv
+
 
 
 counter=0
@@ -59,10 +96,10 @@ while read -r instance; do
   filled_counter=$(seq -f "%05g" $counter $counter)
   # Run di executable
   now=$(date "+%Y-%M-%d_%H-%M-%S") 
-  out_instance_path="out_dir/."$now"_"$filled_counter"_"$instance"_OUT_"$exe_name
-  err_instance_path="out_dir/."$now"_"$filled_counter"_"$instance"_ERR_"$exe_name
+  out_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance"_OUT_"$exe_name
+  err_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance"_ERR_"$exe_name
   # echo $exe $folder/$encoding $folder/$instance
-  time_output=$(/usr/bin/time -v bash -c "$timeout perf stat -o perf.out $exe $folder/$encoding $folder/$instance 1> $out_instance_path 2> $err_instance_path" 2>&1)
+  time_output=$(/usr/bin/time -v bash -c "$timeout $taskset perf stat -o perf.out $exe $folder/$encoding $folder/$instance 1> $out_instance_path 2> $err_instance_path" 2>&1)
 
   # echo $time_output
   if [ -s perf.out ]; then
@@ -88,7 +125,7 @@ while read -r instance; do
   exit_code=$(echo $time_output | grep -oP 'Exit status: ([0-9]+)' | awk '{print $3}')
 
   # Save the dat in a CSV file
-  echo "$problem_name,$instance,$exe_name,$status,$time,$memory,$exit_code" >> results_$today.csv
+  echo "$problem_name,$instance,$exe_name,$status,$time,$memory,$exit_code" >> $out_dir/results_$today.csv
   ((counter++))
 done < "$instances_file"
 

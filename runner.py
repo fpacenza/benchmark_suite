@@ -8,6 +8,8 @@ executables = [
     # exe-path; exe_name (to filter output in experiments)
     ("./bin/clingo","clingo5.6"),
     ("./bin/dlv2-float","dlv2-float"),
+    ("./bin/idlv_clasp.sh","idlv-float+clasp"),
+    ("./bin/idlv_wasp.sh","idlv-float+wasp"),
 ]
 
 benchmarks = [
@@ -39,7 +41,7 @@ def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_c
     optional_arguments = optional_arguments + " "
 
     for tuple in executables:
-        exe=tuple[0]
+        exe="\"" + tuple[0] + "\""
         exe_name=tuple[1]
         for benchmark in benchmarks:
             cmd = "./run.sh " + str(optional_arguments) + str(exe) + " problems/" + str(benchmark) + " problems/" + str(benchmark) + "/" + str(instance_list) + " " + str(out_dir) + " " + str(benchmark) + " " + str(exe_name)

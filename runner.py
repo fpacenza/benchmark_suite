@@ -17,7 +17,7 @@ benchmarks = [
 
 instance_list="instances_test.list"
 
-def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_clean: bool=False, timeout: int=3, taskset: int=-1, sender: bool=True, debug: bool=False):
+def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_clean: bool=False, timeout: int=3, taskset: int=-1, result: bool=True, send_mail: str="", debug: bool=False):
     if only_clean:
         cmd = "./run.sh -r " + str(out_dir)  
         os.system(cmd)
@@ -48,8 +48,11 @@ def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_c
                 console.log("Command to be executed %s" % str(cmd))
             os.system(cmd)
 
-    if sender:
+    if result:
         cmd="./run.sh -s " + str(out_dir)
+        if send_mail != "":
+            cmd = cmd + " \"" + str(send_mail) +"\""
+            console.log(cmd)
         os.system(cmd)
 
 

@@ -8,15 +8,19 @@ head_string="PROBLEM,INSTANCE,EXECUTABLE,STATUS,TIME,MEMORY,EXIT_CODE"
 if [[ $@ == *"-s"* ]]; then
   shift
   out_dir=$1
+  shift
   if [ ! -d "./$out_dir" ]; then
     echo "Directory $out_dir does not exists!"
   else
     echo "PROBLEM,INSTANCE,EXECUTABLE,STATUS,TIME,MEMORY,EXIT_CODE" > results_$today.csv
     cat $out_dir/*.csv | grep -v $head_string >> results_$today.csv
-    
-    echo "NUMA04 ASP Benchmarks Complete" | mutt -s "NUMA04 ASP Benchmarks Complete" pacenza@mat.unical.it -a results_$today.csv
-    
-    echo "All files sent"
+
+    if [ -z "$1" ]; then
+      echo "All files sent"    
+    else
+      echo "NUMA04 ASP Benchmarks Complete" | mutt -s "NUMA04 ASP Benchmarks Complete" $1 -a results_$today.csv
+      echo "All files sent"
+    fi
   fi
   exit 1
 fi

@@ -15,6 +15,7 @@ benchmarks = [
     "solar-30nodes",
 ]
 
+instance_list="instances_test.list"
 
 def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_clean: bool=False, timeout: int=3, taskset: int=-1, sender: bool=True, debug: bool=False):
     if only_clean:
@@ -41,7 +42,7 @@ def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_c
         exe=tuple[0]
         exe_name=tuple[1]
         for benchmark in benchmarks:
-            cmd = "./run.sh " + str(optional_arguments) + str(exe) + " problems/" + str(benchmark) + " problems/" + str(benchmark) + "/instances_test.list " + str(out_dir) + " " + str(benchmark) + " " + str(exe_name)
+            cmd = "./run.sh " + str(optional_arguments) + str(exe) + " problems/" + str(benchmark) + " problems/" + str(benchmark) + "/" + str(instance_list) + " " + str(out_dir) + " " + str(benchmark) + " " + str(exe_name)
             console.log("Executing Problem [magenta]%s[/magenta] with solver [red]%s[/red]" % (str(benchmark), str(exe_name)))
             if debug:
                 console.log("Command to be executed %s" % str(cmd))

@@ -8,4 +8,4 @@ Tests must be executed starting from `runner.py` scripts which **MUST** be edite
  * **list of** `benchmarks` **folders** 
 
 ## How to run
-    python3 runner.py "./bin/executable" solver_name --out-dir="out_dir" --clean --timeout=3 --taskset=8 --debug
+    python3 runner.py --out-dir="out_dir" --clean --timeout=3 --taskset=8 --debug --no-output --send_mail="mail_1@gmail.com mail_2@gmail.com"

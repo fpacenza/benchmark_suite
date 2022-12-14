@@ -6,10 +6,13 @@ console=Console()
 
 executables = [
     # exe-path; exe_name (to filter output in experiments)
-    ("./bin/clingo","clingo5.6"),
-    ("./bin/dlv2-float","dlv2-float"),
-    ("./bin/idlv_clasp.sh","idlv-float+clasp"),
-    ("./bin/idlv_wasp.sh","idlv-float+wasp"),
+    ("./bin/dlv2-float","dlv2-float","instances_new.list","encoding_float.asp"),
+#    ("./bin/dlv2","dlv2"),
+#    ("./bin/clingo","clingo5.6"),
+    ("./bin/idlv_float_wasp.sh","idlv-float+wasp"),
+#    ("./bin/idlv_float_clasp.sh","idlv-float+clasp"),
+#    ("./bin/idlv_standard_wasp.sh","idlv+wasp"),
+#    ("./bin/idlv_standard_clasp.sh","idlv+clasp"),
 ]
 
 benchmarks = [
@@ -17,9 +20,8 @@ benchmarks = [
     "solar-30nodes",
 ]
 
-instance_list="instances_test.list"
 
-def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_clean: bool=False, timeout: int=-1, taskset: int=-1, result: bool=True, send_mail: str="", debug: bool=False):
+def main(output: bool=True, out_dir: str="out_dir", clean: bool=True, only_clean: bool=False, timeout: int=-1, taskset: int=-1, result: bool=True, send_mail: str="", debug: bool=False):
     if only_clean:
         cmd = "./run.sh -r " + str(out_dir)  
         os.system(cmd)
@@ -43,8 +45,18 @@ def main(no_output: bool=False, out_dir: str="out_dir", clean: bool=True, only_c
     for tuple in executables:
         exe="\"" + tuple[0] + "\""
         exe_name=tuple[1]
+
+        # Default value for instances.list and encoding.asp 
+        instance_list="instances.list"
+        encoding_name="encoding.asp"
+
+        if len(tuple) > 2:
+            instance_list=tuple[2]
+            if len(tuple) > 3:
+                encoding_name=tuple[3]
+
         for benchmark in benchmarks:
-            cmd = "./run.sh " + str(optional_arguments) + str(exe) + " problems/" + str(benchmark) + " problems/" + str(benchmark) + "/" + str(instance_list) + " " + str(out_dir) + " " + str(benchmark) + " " + str(exe_name)
+            cmd = "./run.sh " + str(optional_arguments) + str(exe) + " problems/" + str(benchmark) + " problems/" + str(benchmark) + "/" + str(instance_list) + " " + str(encoding_name) + " " + str(out_dir) + " " + str(benchmark) + " " + str(exe_name)
             console.log("Executing Problem [magenta]%s[/magenta] with solver [red]%s[/red]" % (str(benchmark), str(exe_name)))
             if debug:
                 console.log("Command to be executed %s" % str(cmd))

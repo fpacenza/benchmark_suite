@@ -80,7 +80,7 @@ fi
 
 
 # Controlla se sono stati specificati tutti gli argomenti
-if [ $# -ne 6 ]; then
+if [ $# -ne 7 ]; then
   echo "Errore: specificare l'eseguibile, la cartella e il file con le istanze del problema"
   exit 1
 fi
@@ -89,10 +89,10 @@ fi
 exe=$1
 folder=$2
 instances_file=$3
-out_dir=$4
-problem_name=$5
-exe_name=$6
-encoding="encoding.asp"
+encoding=$4
+out_dir=$5
+problem_name=$6
+exe_name=$7
 
 
 # Crea la cartella per salvare l'output

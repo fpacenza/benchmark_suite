@@ -109,15 +109,26 @@ while read -r instance; do
   filled_counter=$(seq -f "%05g" $counter $counter)
   # Run di executable
   now=$(date "+%Y-%M-%d_%H-%M-%S") 
+
+  # Split string by space " " and save splitted pieces in array
+  my_array=($(echo $instance | cut -d " " -f 1-))
+
+  # For loop Cicloon array to add path before each instance pieces
+  final_instance_path=""
+  for i in "${my_array[@]}"; do
+      final_instance_path=$final_instance_path" $folder/$i"
+  done
+
+  instance_name=$(echo $final_instance_path | rev | cut -d "/" -f 1 | rev)
   if [ -z "$output_redirect" ]; then
-    out_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance"_OUT_"$exe_name
+    out_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance_name"_OUT_"$exe_name
   else
     out_instance_path="$output_redirect"
   fi
-  err_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance"_ERR_"$exe_name
+  err_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance_name"_ERR_"$exe_name
 
-  # echo $exe $folder/$encoding $folder/$instance
-  time_output=$(/usr/bin/time -v bash -c "$timeout $taskset perf stat -o perf.out $exe $folder/$encoding $folder/$instance 1> $out_instance_path 2> $err_instance_path" 2>&1)
+  echo "/usr/bin/time -v bash -c \"$timeout $taskset perf stat -o perf.out $exe $folder/$encoding $final_instance_path 1> $out_instance_path 2> $err_instance_path\" 2>&1"
+  time_output=$(/usr/bin/time -v bash -c "$timeout $taskset perf stat -o perf.out $exe $folder/$encoding $final_instance_path 1> $out_instance_path 2> $err_instance_path" 2>&1)
 
   # echo $time_output
   if [ -s perf.out ]; then
@@ -143,7 +154,7 @@ while read -r instance; do
   exit_code=$(echo $time_output | grep -oP 'Exit status: ([0-9]+)' | awk '{print $3}')
 
   # Save the dat in a CSV file
-  echo "$problem_name,$instance,$exe_name,$status,$time,$memory,$exit_code" >> $out_dir/results_$today.csv
+  echo "$problem_name,$instance_name,$exe_name,$status,$time,$memory,$exit_code" >> $out_dir/results_$today.csv
   ((counter++))
 done < "$instances_file"
 

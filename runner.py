@@ -9,7 +9,7 @@ executables = [
     ("./bin/dlv2-float","dlv2-float","instances_new.list","encoding_float.asp"),
 #    ("./bin/dlv2","dlv2"),
 #    ("./bin/clingo","clingo5.6"),
-    ("./bin/idlv_float_wasp.sh","idlv-float+wasp"),
+    ("./bin/idlv_float_wasp.sh","idlv-float+wasp","instances_new.list","encoding_float.asp"),
 #    ("./bin/idlv_float_clasp.sh","idlv-float+clasp"),
 #    ("./bin/idlv_standard_wasp.sh","idlv+wasp"),
 #    ("./bin/idlv_standard_clasp.sh","idlv+clasp"),
@@ -37,7 +37,7 @@ def main(output: bool=True, out_dir: str="out_dir", clean: bool=True, only_clean
         optional_arguments = optional_arguments + "--timeout " + str(timeout) + " "
     if taskset != -1:
         optional_arguments = optional_arguments + "--taskset " + str(taskset) + " "
-    if no_output:
+    if output==False:
         optional_arguments = optional_arguments + "--no-output "
 
     optional_arguments = optional_arguments + " "

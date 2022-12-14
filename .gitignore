@@ -1,3 +1,4 @@
+.vscode/
 bin/*
 problems/*
 out_dir/.*

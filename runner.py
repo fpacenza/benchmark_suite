@@ -6,10 +6,10 @@ console=Console()
 
 executables = [
     # exe-path; exe_name (to filter output in experiments)
-    ("./bin/dlv2-float","dlv2-float","instances_new.list","encoding_float.asp"),
+    ("./bin/dlv2-float","dlv2-float","instances.list","encoding_float.asp"),
 #    ("./bin/dlv2","dlv2"),
 #    ("./bin/clingo","clingo5.6"),
-    ("./bin/idlv_float_wasp.sh","idlv-float+wasp","instances_new.list","encoding_float.asp"),
+    ("./bin/idlv_float_wasp.sh","idlv-float+wasp","instances.list","encoding_float.asp"),
 #    ("./bin/idlv_float_clasp.sh","idlv-float+clasp"),
 #    ("./bin/idlv_standard_wasp.sh","idlv+wasp"),
 #    ("./bin/idlv_standard_clasp.sh","idlv+clasp"),
@@ -17,11 +17,10 @@ executables = [
 
 benchmarks = [
     "SystemSynthesis",
-    "solar-30nodes",
 ]
 
 
-def main(output: bool=True, out_dir: str="out_dir", clean: bool=True, only_clean: bool=False, timeout: int=-1, taskset: int=-1, result: bool=True, send_mail: str="", debug: bool=False):
+def main(output: bool=True, out_dir: str="out_dir_systemsynthesis", clean: bool=True, only_clean: bool=False, timeout: int=600, taskset: int=8, result: bool=True, send_mail: str="", debug: bool=False):
     if only_clean:
         cmd = "./run.sh -r " + str(out_dir)  
         os.system(cmd)

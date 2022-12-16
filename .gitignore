@@ -1,7 +1,7 @@
 .vscode/
 bin/*
 problems/*
-out_dir/.*
+out_dir*/.*
 *.csv
 *.out
 bin/idlv_wasp.sh

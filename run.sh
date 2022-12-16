@@ -126,14 +126,15 @@ while read -r instance; do
     out_instance_path="$output_redirect"
   fi
   err_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance_name"_ERR_"$exe_name
-
-  echo "/usr/bin/time -v bash -c \"$timeout $taskset perf stat -o perf.out $exe $folder/$encoding $final_instance_path 1> $out_instance_path 2> $err_instance_path\" 2>&1"
-  time_output=$(/usr/bin/time -v bash -c "$timeout $taskset perf stat -o perf.out $exe $folder/$encoding $final_instance_path 1> $out_instance_path 2> $err_instance_path" 2>&1)
+  perf_out=$out_dir"/perf_"$now"_"$filled_counter"_"$instance_name"_"$exe_name".out"
+  #echo "#################" $perf_out "#################"
+  #echo "/usr/bin/time -v bash -c \"$timeout $taskset perf stat -o $perf_out $exe $folder/$encoding $final_instance_path 1> $out_instance_path 2> $err_instance_path\" 2>&1"
+  time_output=$(/usr/bin/time -v bash -c "$timeout $taskset perf stat -o $perf_out $exe $folder/$encoding $final_instance_path 1> $out_instance_path 2> $err_instance_path" 2>&1)
 
   # echo $time_output
-  if [ -s perf.out ]; then
+  if [ -s $perf_out ]; then
     # If the process has not been killed, extract execution time from perf output
-    time=$(grep "time elapsed" perf.out | awk '{print $1}' | sed 's/,/./')
+    time=$(grep "time elapsed" $perf_out | awk '{print $1}' | sed 's/,/./')
     status="complete"
   else
     # else extract execution time from /usr/bin/time -v
@@ -156,7 +157,11 @@ while read -r instance; do
   # Save the dat in a CSV file
   echo "$problem_name,$instance_name,$exe_name,$status,$time,$memory,$exit_code" >> $out_dir/results_$today.csv
   ((counter++))
+
+  sleep 0.1
+
+  # Remove temp files
+  rm $perf_out
+
 done < "$instances_file"
 
-# Remove temp files
-rm perf.out

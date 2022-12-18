@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 today=$(date "+%Y-%M-%d_%H.%M.%S.%N")
 out_dir="out_dir"

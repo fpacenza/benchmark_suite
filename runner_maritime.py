@@ -18,7 +18,7 @@ benchmarks = [
 
 
 
-def main(output: bool=True, out_dir: str="out_dir_maritime", clean: bool=True, only_clean: bool=False, timeout: int=600, taskset: int=4, result: bool=True, send_mail: str="", debug: bool=False):
+def main(output: bool=True, out_dir: str="out_dir_maritime", clean: bool=True, only_clean: bool=False, timeout: int=600, taskset: int=4, result: bool=True, send_mail: str="pacenza@mat.unical.it zangari@mat.unical.it", debug: bool=False):
     if only_clean:
         cmd = "./run.sh -r " + str(out_dir)  
         os.system(cmd)

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-today=$(date "+%Y-%M-%d_%H.%M.%S")
+today=$(date "+%Y-%M-%d_%H.%M.%S.%N")
 out_dir="out_dir"
 head_string="PROBLEM,INSTANCE,EXECUTABLE,STATUS,TIME,MEMORY,EXIT_CODE"
 
@@ -108,7 +108,7 @@ counter=0
 while read -r instance; do
   filled_counter=$(seq -f "%05g" $counter $counter)
   # Run di executable
-  now=$(date "+%Y-%M-%d_%H-%M-%S") 
+  now=$(date "+%Y-%M-%d_%H-%M-%S-%N") 
 
   # Split string by space " " and save splitted pieces in array
   my_array=($(echo $instance | cut -d " " -f 1-))

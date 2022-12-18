@@ -5,13 +5,13 @@ console=Console()
 
 executables = [
     # exe-path; exe_name (to filter output in experiments)
-    ("./bin/dlv2-double --mode=idlv","grounding","instances_test.list","encoding.dlv2.asp"),
-    ("./bin/dlv2-double","dlv2-double","instances_test.list","encoding.dlv2.asp"),
-    ("./bin/idlv_double_wasp.sh","idlv-double+wasp","instances_test.list","encoding.dlv2.asp"),
-    ("./bin/idlv_double_clasp.sh","idlv-double+clasp","instances_test.list","encoding.dlv2.asp"),
-    ("./bin/idlv_double_precision_clasp.sh","idlv-double-precision+clasp","instances_test.list","encoding.dlv2.asp"),
-    ("./bin/dlv2","dlv-2.1.2","instances_test.list","encoding.dlv2.asp"),
-    ("./bin/clingo-5.6.2","clingo-5.6.2","instances_test.list","encoding.dlv2.asp"),
+    ("./bin/dlv2-double --mode=idlv","grounding","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/dlv2-double","dlv2-double","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/idlv_double_wasp.sh","idlv-double+wasp","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/idlv_double_clasp.sh","idlv-double+clasp","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/idlv_double_precision_clasp.sh","idlv-double-precision+clasp","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/dlv2","dlv-2.1.2","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/clingo-5.6.2","clingo-5.6.2","instances.all.list","encoding.dlv2.asp"),
 ]
 
 benchmarks = [

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-today=$(date "+%Y-%M-%d_%H.%M.%S.%N")
+today=$(date "+%Y-%m-%d_%H.%M.%S.%N")
 out_dir="out_dir"
 head_string="PROBLEM,INSTANCE,EXECUTABLE,STATUS,TIME,MEMORY,EXIT_CODE"
 
@@ -108,7 +108,7 @@ counter=0
 while read -r instance; do
   filled_counter=$(seq -f "%05g" $counter $counter)
   # Run di executable
-  now=$(date "+%Y-%M-%d_%H-%M-%S-%N") 
+  now=$(date "+%Y-%m-%d_%H-%M-%S-%N") 
 
   # Split string by space " " and save splitted pieces in array
   my_array=($(echo $instance | cut -d " " -f 1-))
@@ -119,13 +119,15 @@ while read -r instance; do
       final_instance_path=$final_instance_path" $folder/$i"
   done
 
+  #echo $problem_name
+  problem=$(echo $problem_name | sed 's/\//_/')
   instance_name=$(echo $final_instance_path | rev | cut -d "/" -f 1 | rev)
   if [ -z "$output_redirect" ]; then
-    out_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance_name"_OUT_"$exe_name
+    out_instance_path="$out_dir/."$now"_"$filled_counter"_"$problem"_"$instance_name"_OUT_"$exe_name
   else
     out_instance_path="$output_redirect"
   fi
-  err_instance_path="$out_dir/."$now"_"$filled_counter"_"$instance_name"_ERR_"$exe_name
+  err_instance_path="$out_dir/."$now"_"$filled_counter"_"$problem"_"$instance_name"_ERR_"$exe_name
   perf_out=$out_dir"/perf_"$now"_"$filled_counter"_"$instance_name"_"$exe_name".out"
   #echo "#################" $perf_out "#################"
   #echo "/usr/bin/time -v bash -c \"$timeout $taskset perf stat -o $perf_out $exe $folder/$encoding $final_instance_path 1> $out_instance_path 2> $err_instance_path\" 2>&1"

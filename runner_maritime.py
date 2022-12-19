@@ -7,7 +7,7 @@ executables = [
     # exe-path; exe_name (to filter output in experiments); instance_list filename; encoding_name filename
     ("./bin/dlv2-double --mode=idlv --t","dlv2-double","instances.float.list","encoding.float.asp"),
     ("./bin/dlv2-double-python3/dlv2 --mode=idlv --t","dlv2-external","instances.idlv.quote.list","encoding.idlv.quote.asp"),
-    ("./bin/clingo-5.4.0 --mode=gringo --text","clingo-5.4.0","instances.gringo.quote.list","encoding.gringo.quote.asp"),
+    ("./bin/clingo-5.4.0","clingo-5.4.0","instances.gringo.quote.list","encoding.gringo.quote.asp"),
 ]
 
 benchmarks = [

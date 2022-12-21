@@ -10,8 +10,8 @@ executables = [
     ("./bin/idlv_double_wasp.sh","idlv-double+wasp","instances.all.list","encoding.dlv2.asp"),
     ("./bin/idlv_double_clasp.sh","idlv-double+clasp","instances.all.list","encoding.dlv2.asp"),
     ("./bin/idlv_double_precision_clasp.sh","idlv-double-precision+clasp","instances.all.list","encoding.dlv2.asp"),
-    ("./bin/dlv2","dlv-2.1.2","instances.all.list","encoding.dlv2.asp"),
-    ("./bin/clingo-5.6.2","clingo-5.6.2","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/dlv2","dlv-2-1-2","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/clingo-5.6.2","clingo-5-6-2","instances.all.list","encoding.dlv2.asp"),
 ]
 
 benchmarks = [
@@ -21,13 +21,13 @@ benchmarks = [
 
 def main(output: bool=True, out_dir: str="out_dir_system_synthesis", clean: bool=True, only_clean: bool=False, timeout: int=600, taskset: int=8, result: bool=True, send_mail: str="pacenza@mat.unical.it zangari@mat.unical.it", debug: bool=False):
     if only_clean:
-        cmd = "./run.sh -r " + str(out_dir)  
+        cmd = "./run.sh --only-clean " + str(out_dir)  
         os.system(cmd)
         console.log("[magenta]All files have been cleaned and the script has been terminated![/magenta]")
         exit(1)
 
     if clean:
-        cmd = "./run.sh -r " + str(out_dir)  
+        cmd = "./run.sh --only-clean " + str(out_dir)  
         os.system(cmd)
 
     optional_arguments = ""
@@ -61,7 +61,7 @@ def main(output: bool=True, out_dir: str="out_dir_system_synthesis", clean: bool
             os.system(cmd)
 
     if result:
-        cmd="./run.sh -s " + str(out_dir)
+        cmd="./run.sh --send " + str(out_dir)
         if send_mail != "":
             cmd = cmd + " \"" + str(send_mail) +"\""
             console.log(cmd)

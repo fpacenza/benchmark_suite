@@ -5,13 +5,13 @@ console=Console()
 
 executables = [
     # exe-path; exe_name (to filter output in experiments)
-    ("./bin/dlv2-double --mode=idlv --float-precision=12","grounding","instances.float.list","encoding.float.asp"),
-    ("./bin/dlv2-double --float-precision=12","dlv2-double","instances.float.list","encoding.float.asp"),
-    ("./bin/idlv_double_wasp.sh","idlv-double+wasp","instances.float.list","encoding.float.asp"),
-    ("./bin/idlv_double_clasp.sh","idlv-double+clasp","instances.float.list","encoding.float.asp"),
-    ("./bin/idlv_double_precision_clasp.sh","idlv-double-precision+clasp","instances.float.list","encoding.float.asp"),
-    ("./bin/dlv2","dlv-2-1-2","instances.idlv.list","encoding.idlv.asp"),
-    ("./bin/clingo-5.6.2","clingo-5-6-2","instances.gringo.list","encoding.gringo.asp"),
+#    ("./bin/dlv2-double --mode=idlv --float-precision=12","grounding","instances.float.list","encoding.float.asp"),
+#    ("./bin/dlv2-double --float-precision=12","dlv2-double","instances.float.list","encoding.float.asp"),
+#    ("./bin/idlv_double_wasp.sh","idlv-double+wasp","instances.float.list","encoding.float.asp"),
+#    ("./bin/idlv_double_clasp.sh","idlv-double+clasp","instances.float.list","encoding.float.asp"),
+#    ("./bin/idlv_double_precision_clasp.sh","idlv-double-precision+clasp","instances.float.list","encoding.float.asp"),
+    ("./bin/dlv2-double-python3/dlv2","dlv2-external","instances.idlv.list","encoding.idlv.asp"),
+#    ("./bin/clingo-5.4.0","clingo-5-4-0","instances.gringo.list","encoding.gringo.asp"),
 ]
 
 benchmarks = [
@@ -28,7 +28,7 @@ benchmarks = [
 
 
 
-def main(output: bool=True, out_dir: str="out_dir_citybench", clean: bool=True, only_clean: bool=False, timeout: int=600, taskset: int=0, result: bool=True, send_mail: str="pacenza@mat.unical.it zangari@mat.unical.it", debug: bool=False):
+def main(output: bool=True, out_dir: str="out_dir_citybench2", clean: bool=False, only_clean: bool=False, timeout: int=600, taskset: int=0, result: bool=True, send_mail: str="pacenza@mat.unical.it zangari@mat.unical.it", debug: bool=False):
     if only_clean:
         cmd = "./run.sh --only-clean " + str(out_dir)  
         os.system(cmd)

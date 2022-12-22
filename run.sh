@@ -122,6 +122,7 @@ while read -r instance; do
   #echo $problem_name
   problem=$(echo $problem_name | sed 's/\//_/')
   instance_name=$(echo $final_instance_path | rev | cut -d "/" -f 1 | rev)
+  instance_name=${instance_name%.asp}
   if [ -z "$output_redirect" ]; then
     out_instance_path="$out_dir/."$now"_"$filled_counter"_"$problem"_"$instance_name"_OUT_"$exe_name
   else
@@ -136,7 +137,8 @@ while read -r instance; do
   # echo $time_output
   if [ -s $perf_out ]; then
     # If the process has not been killed, extract execution time from perf output
-    time=$(grep "time elapsed" $perf_out | awk '{print $1}' | sed 's/,/./')
+#    time=$(grep "time elapsed" $perf_out | awk '{print $1}' | sed 's/,/./')
+    time=$(grep "time elapsed" $perf_out | awk '{print $1}')
     status="complete"
   else
     # else extract execution time from /usr/bin/time -v

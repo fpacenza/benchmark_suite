@@ -113,7 +113,7 @@ while read -r instance; do
   # Split string by space " " and save splitted pieces in array
   my_array=($(echo $instance | cut -d " " -f 1-))
 
-  # For loop Cicloon array to add path before each instance pieces
+  # For loop on array to add path before each instance pieces
   final_instance_path=""
   for i in "${my_array[@]}"; do
       final_instance_path=$final_instance_path" $folder/$i"

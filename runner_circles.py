@@ -5,9 +5,9 @@ console=Console()
 
 executables = [
     # exe-path; exe_name (to filter output in experiments); instance_list filename; encoding_name filename
-    ("./bin/dlv2-double --mode=idlv --t","dlv2-double","instances.float.list","encoding.float.asp"),
-    ("./bin/dlv2-double-python3/dlv2 --mode=idlv --t","dlv2-external","instances.idlv.list","encoding.idlv.asp"),
-    ("./bin/clingo-5.4.0 --mode=gringo --text","clingo-5-4-0","instances.gringo.list","encoding.gringo.asp"),
+    ("./bin/dlv2-double --mode=idlv --t","dlv2-double-grounding","instances.float.list","encoding.float.asp"),
+    ("./bin/dlv2-double-python3/dlv2 --mode=idlv --t","dlv2-external-grounding","instances.idlv.list","encoding.idlv.asp"),
+    ("./bin/clingo-5.4.0 --mode=gringo --text","clingo-5-4-0-external-grounding","instances.gringo.list","encoding.gringo.asp"),
 ]
 
 benchmarks = [

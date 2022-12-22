@@ -5,13 +5,15 @@ console=Console()
 
 executables = [
     # exe-path; exe_name (to filter output in experiments)
-    ("./bin/dlv2-double --mode=idlv","grounding","instances.all.list","encoding.dlv2.asp"),
     ("./bin/dlv2-double","dlv2-double","instances.all.list","encoding.dlv2.asp"),
     ("./bin/idlv_double_wasp.sh","idlv-double+wasp","instances.all.list","encoding.dlv2.asp"),
     ("./bin/idlv_double_clasp.sh","idlv-double+clasp","instances.all.list","encoding.dlv2.asp"),
-    ("./bin/idlv_double_precision_clasp.sh","idlv-double-precision+clasp","instances.all.list","encoding.dlv2.asp"),
+    ("./bin/idlv_double_clasp_precision3.sh","idlv-double-precision3+clasp","instances.all.list","encoding.dlv2.asp"),
+
+    ("./bin/clingo-5.4.0","clingo-5-4-0","instances.all.list","encoding.dlv2.asp"),
+    #("./bin/clingo-5.6.2","clingo-5-6-2","instances.all.list","encoding.dlv2.asp"),
+
     ("./bin/dlv2","dlv-2-1-2","instances.all.list","encoding.dlv2.asp"),
-    ("./bin/clingo-5.6.2","clingo-5-6-2","instances.all.list","encoding.dlv2.asp"),
 ]
 
 benchmarks = [
@@ -19,7 +21,7 @@ benchmarks = [
 ]
 
 
-def main(output: bool=True, out_dir: str="out_dir_system_synthesis", clean: bool=True, only_clean: bool=False, timeout: int=600, taskset: int=8, result: bool=True, send_mail: str="pacenza@mat.unical.it zangari@mat.unical.it", debug: bool=False):
+def main(output: bool=True, out_dir: str="out_dir_system_synthesis", clean: bool=True, only_clean: bool=False, timeout: int=600, taskset: int=0, result: bool=True, send_mail: str="pacenza@mat.unical.it zangari@mat.unical.it", debug: bool=False):
     if only_clean:
         cmd = "./run.sh --only-clean " + str(out_dir)  
         os.system(cmd)

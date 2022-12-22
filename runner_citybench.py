@@ -5,20 +5,15 @@ console=Console()
 
 executables = [
     # exe-path; exe_name (to filter output in experiments)
-#    ("./bin/dlv2-double --mode=idlv --float-precision=12","grounding","instances.float.list","encoding.float.asp"),
-#    ("./bin/dlv2-double --float-precision=12","dlv2-double","instances.float.list","encoding.float.asp"),
-#    ("./bin/idlv_double_wasp.sh","idlv-double+wasp","instances.float.list","encoding.float.asp"),
-#    ("./bin/idlv_double_clasp.sh","idlv-double+clasp","instances.float.list","encoding.float.asp"),
-#    ("./bin/idlv_double_precision_clasp.sh","idlv-double-precision+clasp","instances.float.list","encoding.float.asp"),
-    ("./bin/dlv2-double-python3/dlv2","dlv2-external","instances.idlv.list","encoding.idlv.asp"),
-#    ("./bin/clingo-5.4.0","clingo-5-4-0","instances.gringo.list","encoding.gringo.asp"),
+    ("./bin/dlv2-double --mode=idlv --t --float-precision=12","dlv2-double-grounding","instances.float.list","encoding.float.asp"),
+    ("./bin/dlv2-double-python3/dlv2 --mode=idlv --t","dlv2-external-grounding","instances.idlv.list","encoding.idlv.asp"),
+    ("./bin/clingo-5.4.0 --mode=gringo --text","clingo-5-4-0-external-grounding","instances.gringo.list","encoding.gringo.asp"),
 ]
 
 benchmarks = [
     "CityBench/Q1_100",
     "CityBench/Q2_100",
     "CityBench/Q3_100",
-    "CityBench/Q5_100",
     "CityBench/Q6_8",
     "CityBench/Q7_8",
     "CityBench/Q8_8",
@@ -28,7 +23,7 @@ benchmarks = [
 
 
 
-def main(output: bool=True, out_dir: str="out_dir_citybench2", clean: bool=False, only_clean: bool=False, timeout: int=600, taskset: int=0, result: bool=True, send_mail: str="pacenza@mat.unical.it zangari@mat.unical.it", debug: bool=False):
+def main(output: bool=True, out_dir: str="out_dir_citybench", clean: bool=True, only_clean: bool=False, timeout: int=600, taskset: int=0, result: bool=True, send_mail: str="pacenza@mat.unical.it zangari@mat.unical.it", debug: bool=False):
     if only_clean:
         cmd = "./run.sh --only-clean " + str(out_dir)  
         os.system(cmd)

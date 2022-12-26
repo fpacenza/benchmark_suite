@@ -123,6 +123,7 @@ while read -r instance; do
   problem=$(echo $problem_name | sed 's/\//_/')
   instance_name=$(echo $final_instance_path | rev | cut -d "/" -f 1 | rev)
   instance_name=${instance_name%.asp}
+  instance_name=${instance_name%.py}
   if [ -z "$output_redirect" ]; then
     out_instance_path="$out_dir/."$now"_"$filled_counter"_"$problem"_"$instance_name"_OUT_"$exe_name
   else

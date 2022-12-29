@@ -138,13 +138,13 @@ while read -r instance; do
   # echo $time_output
   if [ -s $perf_out ]; then
     # If the process has not been killed, extract execution time from perf output
-#    time=$(grep "time elapsed" $perf_out | awk '{print $1}' | sed 's/,/./')
-    time=$(grep "time elapsed" $perf_out | awk '{print $1}')
+    time=$(grep "time elapsed" $perf_out | awk '{print $1}' | sed 's/,/./')
+#    time=$(grep "time elapsed" $perf_out | awk '{print $1}')
     status="complete"
   else
     # else extract execution time from /usr/bin/time -v
-#    elapsed_time=$(echo $time_output | grep -oP 'Elapsed \(wall clock\) time \(h:mm:ss or m:ss\): ([0-9]+):([0-9]+)\.([0-9]+)' | awk '{print $8 $9 $10}' | sed 's/,/./')
-    elapsed_time=$(echo $time_output | grep -oP 'Elapsed \(wall clock\) time \(h:mm:ss or m:ss\): ([0-9]+):([0-9]+)\.([0-9]+)' | awk '{print $8 $9 $10}')
+    elapsed_time=$(echo $time_output | grep -oP 'Elapsed \(wall clock\) time \(h:mm:ss or m:ss\): ([0-9]+):([0-9]+)\.([0-9]+)' | awk '{print $8 $9 $10}' | sed 's/,/./')
+#    elapsed_time=$(echo $time_output | grep -oP 'Elapsed \(wall clock\) time \(h:mm:ss or m:ss\): ([0-9]+):([0-9]+)\.([0-9]+)' | awk '{print $8 $9 $10}')
     # echo $elapsed_time
     # Extract and convert minutes, seconds and milliseconds in milliseconds
     minutes=$(echo $elapsed_time | cut -d: -f1)
@@ -155,8 +155,8 @@ while read -r instance; do
     status="killed"
   fi
   # Extract used memory from /usr/bin/time -v command
-#  memory=$(echo $time_output | grep -oP 'Maximum resident set size \(kbytes\): ([0-9]+)' | awk '{print $6}' | sed 's/,/./')
-  memory=$(echo $time_output | grep -oP 'Maximum resident set size \(kbytes\): ([0-9]+)' | awk '{print $6}')
+  memory=$(echo $time_output | grep -oP 'Maximum resident set size \(kbytes\): ([0-9]+)' | awk '{print $6}' | sed 's/,/./')
+#  memory=$(echo $time_output | grep -oP 'Maximum resident set size \(kbytes\): ([0-9]+)' | awk '{print $6}')
 
   # Get the exit code
   exit_code=$(echo $time_output | grep -oP 'Exit status: ([0-9]+)' | awk '{print $3}')

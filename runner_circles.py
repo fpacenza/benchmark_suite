@@ -7,6 +7,8 @@ executables = [
     # exe-path; exe_name (to filter output in experiments); instance_list filename; encoding_name filename
     ("./bin/dlv2-double --mode=idlv --t","dlv2-double-grounding","instances.float.list","encoding.float.asp"),
     ("./bin/dlv2-double-python3/dlv2 --mode=idlv --t","dlv2-external-grounding","instances.idlv.list","encoding.idlv.asp"),
+#    ("./bin/dlv2.1.2-python3/dlv2 --mode=idlv --t","dlv2.1.2-external-grounding","instances.idlv.quoted.list","encoding.idlv.quoted.asp"),
+    ("./bin/DLV2.1.0-python3/build/release/dlv2 --mode=idlv --t","dlv2.1.0-external-grounding","instances.idlv.list","encoding.idlv.asp"),
     ("./bin/clingo-5.4.0 --mode=gringo --text","clingo-5-4-0-external-grounding","instances.gringo.list","encoding.gringo.asp"),
 ]
 

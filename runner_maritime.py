@@ -8,9 +8,15 @@ executables = [
     ("./bin/dlv2-double --mode=idlv --t","dlv2-double-grounding","instances.float.list","encoding.float.asp"),
     ("./bin/dlv2-double-python3/dlv2 --mode=idlv --t","dlv2-external-grounding","instances.idlv.quote.list","encoding.idlv.quote.asp"),
     ("./bin/clingo-5.4.0 --mode=gringo --text","clingo-5-4-0-external-grounding","instances.gringo.quote.list","encoding.gringo.quote.asp"),
-    ("./bin/dlv2-double --mode=idlv --t","dlv2-double-rewritten-grounding","instances.float.list","encoding.float_intensive.asp"),
-    ("./bin/dlv2-double-python3/dlv2 --mode=idlv --t","dlv2-external-rewritten-grounding","instances.idlv.quote.list","encoding.idlv.quote_intensive.asp"),
-    ("./bin/clingo-5.4.0 --mode=gringo --text","clingo-5-4-0-external-rewritten-grounding","instances.gringo.quote.list","encoding.gringo.quote_intensive.asp"),
+#    ("./bin/dlv2.1.2-python3/dlv2 --mode=idlv --t","dlv2.1.2-external-grounding","instances.idlv.quote.list","encoding.idlv.quote.asp"),
+    ("./bin/DLV2.1.0-python3/build/release/dlv2 --mode=idlv --t","dlv2.1.0-external-grounding","instances.idlv.quote.list","encoding.idlv.quote.asp"),
+
+#    ("./bin/dlv2-double --mode=idlv --t","dlv2-double-rewritten-grounding","instances.float.list","encoding.float_intensive.asp"),
+#    ("./bin/dlv2-double-python3/dlv2 --mode=idlv --t","dlv2-external-rewritten-grounding","instances.idlv.quote.list","encoding.idlv.quote_intensive.asp"),
+#    ("./bin/clingo-5.4.0 --mode=gringo --text","clingo-5-4-0-external-rewritten-grounding","instances.gringo.quote.list","encoding.gringo.quote_intensive.asp"),
+#    ("./bin/dlv2.1.2-python3/dlv2 --mode=idlv --t","dlv2.1.2-external-rewritten-grounding","instances.idlv.quote.list","encoding.idlv.quote_intensive.asp"),
+#    ("./bin/DLV2.1.0-python3/build/release/dlv2 --mode=idlv --t","dlv2.1.0-external-rewritten-grounding","instances.idlv.quote.list","encoding.idlv.quote_intensive.asp"),
+
 ]
 
 benchmarks = [

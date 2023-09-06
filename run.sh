@@ -120,7 +120,9 @@ while read -r instance; do
   done
 
   #echo $problem_name
-  problem=$(echo $problem_name | sed 's/\//_/')
+#  problem=$(echo $problem_name | sed 's/\//_/')
+  problem=$(echo $problem_name | rev | cut -f1 -d"/" | rev)
+  template=$(echo $template_file | rev | cut -f1 -d"/" | rev)
   instance_name=$(echo $final_instance_path | rev | cut -d "/" -f 1 | rev)
   instance_name=${instance_name%.asp}
   instance_name=${instance_name%.py}
@@ -157,12 +159,14 @@ while read -r instance; do
   # Extract used memory from /usr/bin/time -v command
   memory=$(echo $time_output | grep -oP 'Maximum resident set size \(kbytes\): ([0-9]+)' | awk '{print $6}' | sed 's/,/./')
 #  memory=$(echo $time_output | grep -oP 'Maximum resident set size \(kbytes\): ([0-9]+)' | awk '{print $6}')
+  memory_mb=$(echo "scale=6; $memory/1024" | bc -l)
+#  echo "MEMORY (kb): "$memory " MEMORY (MB): "$memory_mb
 
   # Get the exit code
   exit_code=$(echo $time_output | grep -oP 'Exit status: ([0-9]+)' | awk '{print $3}')
 
   # Save the dat in a CSV file
-  echo "$problem_name;$instance_name;$exe_name;$status;$time;$memory;$exit_code" >> $out_dir/results_$today.csv
+  echo "$problem;$instance_name;$exe_name;$status;$time;$memory_mb;$exit_code" >> $out_dir/results_$today.csv
   ((counter++))
 
   sleep 0.1
